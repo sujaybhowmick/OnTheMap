@@ -15,6 +15,12 @@
 		489FDE431EFD6F7700686431 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 489FDE411EFD6F7700686431 /* LaunchScreen.storyboard */; };
 		489FDE4E1EFD6F7700686431 /* OnTheMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE4D1EFD6F7700686431 /* OnTheMapTests.swift */; };
 		489FDE591EFD6F7700686431 /* OnTheMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE581EFD6F7700686431 /* OnTheMapUITests.swift */; };
+		489FDE681EFD7A1800686431 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE671EFD7A1800686431 /* LoginViewController.swift */; };
+		489FDE6F1EFEB86600686431 /* OnTheMapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE6E1EFEB86600686431 /* OnTheMapClient.swift */; };
+		489FDE711EFEB90800686431 /* OnTheMapConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE701EFEB90800686431 /* OnTheMapConstants.swift */; };
+		489FDE731EFFD16500686431 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE721EFFD16500686431 /* GCDBlackBox.swift */; };
+		489FDE761EFFFDFA00686431 /* OnTheMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE751EFFFDFA00686431 /* OnTheMap.swift */; };
+		489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +55,12 @@
 		489FDE541EFD6F7700686431 /* OnTheMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTheMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		489FDE581EFD6F7700686431 /* OnTheMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMapUITests.swift; sourceTree = "<group>"; };
 		489FDE5A1EFD6F7700686431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		489FDE671EFD7A1800686431 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		489FDE6E1EFEB86600686431 /* OnTheMapClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapClient.swift; sourceTree = "<group>"; };
+		489FDE701EFEB90800686431 /* OnTheMapConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapConstants.swift; sourceTree = "<group>"; };
+		489FDE721EFFD16500686431 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		489FDE751EFFFDFA00686431 /* OnTheMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMap.swift; sourceTree = "<group>"; };
+		489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapClientExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +111,13 @@
 		489FDE351EFD6F7700686431 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				489FDE741EFFFDE300686431 /* Model */,
+				489FDE6D1EFEB82A00686431 /* Client */,
+				489FDE6C1EFEB7E100686431 /* SupportingFiles */,
+				489FDE6B1EFEB7A900686431 /* Assets */,
+				489FDE661EFD78E800686431 /* Controller */,
 				489FDE361EFD6F7700686431 /* AppDelegate.swift */,
-				489FDE381EFD6F7700686431 /* FirstViewController.swift */,
-				489FDE3A1EFD6F7700686431 /* SecondViewController.swift */,
-				489FDE3C1EFD6F7700686431 /* Main.storyboard */,
-				489FDE3F1EFD6F7700686431 /* Assets.xcassets */,
-				489FDE411EFD6F7700686431 /* LaunchScreen.storyboard */,
-				489FDE441EFD6F7700686431 /* Info.plist */,
+				489FDE721EFFD16500686431 /* GCDBlackBox.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -126,6 +138,52 @@
 				489FDE5A1EFD6F7700686431 /* Info.plist */,
 			);
 			path = OnTheMapUITests;
+			sourceTree = "<group>";
+		};
+		489FDE661EFD78E800686431 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				489FDE381EFD6F7700686431 /* FirstViewController.swift */,
+				489FDE3A1EFD6F7700686431 /* SecondViewController.swift */,
+				489FDE671EFD7A1800686431 /* LoginViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		489FDE6B1EFEB7A900686431 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				489FDE3C1EFD6F7700686431 /* Main.storyboard */,
+				489FDE411EFD6F7700686431 /* LaunchScreen.storyboard */,
+				489FDE3F1EFD6F7700686431 /* Assets.xcassets */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		489FDE6C1EFEB7E100686431 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				489FDE441EFD6F7700686431 /* Info.plist */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		489FDE6D1EFEB82A00686431 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				489FDE6E1EFEB86600686431 /* OnTheMapClient.swift */,
+				489FDE701EFEB90800686431 /* OnTheMapConstants.swift */,
+				489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		489FDE741EFFFDE300686431 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				489FDE751EFFFDFA00686431 /* OnTheMap.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,9 +323,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				489FDE761EFFFDFA00686431 /* OnTheMap.swift in Sources */,
+				489FDE731EFFD16500686431 /* GCDBlackBox.swift in Sources */,
+				489FDE6F1EFEB86600686431 /* OnTheMapClient.swift in Sources */,
+				489FDE681EFD7A1800686431 /* LoginViewController.swift in Sources */,
 				489FDE3B1EFD6F7700686431 /* SecondViewController.swift in Sources */,
+				489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */,
 				489FDE371EFD6F7700686431 /* AppDelegate.swift in Sources */,
 				489FDE391EFD6F7700686431 /* FirstViewController.swift in Sources */,
+				489FDE711EFEB90800686431 /* OnTheMapConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +584,7 @@
 				489FDE5F1EFD6F7700686431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		489FDE601EFD6F7700686431 /* Build configuration list for PBXNativeTarget "OnTheMapTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +593,7 @@
 				489FDE621EFD6F7700686431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		489FDE631EFD6F7700686431 /* Build configuration list for PBXNativeTarget "OnTheMapUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +602,7 @@
 				489FDE651EFD6F7700686431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
