@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		489FDE371EFD6F7700686431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE361EFD6F7700686431 /* AppDelegate.swift */; };
-		489FDE391EFD6F7700686431 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE381EFD6F7700686431 /* FirstViewController.swift */; };
-		489FDE3B1EFD6F7700686431 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE3A1EFD6F7700686431 /* SecondViewController.swift */; };
+		489FDE391EFD6F7700686431 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE381EFD6F7700686431 /* MapViewController.swift */; };
+		489FDE3B1EFD6F7700686431 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE3A1EFD6F7700686431 /* ListViewController.swift */; };
 		489FDE3E1EFD6F7700686431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 489FDE3C1EFD6F7700686431 /* Main.storyboard */; };
 		489FDE401EFD6F7700686431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 489FDE3F1EFD6F7700686431 /* Assets.xcassets */; };
 		489FDE431EFD6F7700686431 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 489FDE411EFD6F7700686431 /* LaunchScreen.storyboard */; };
@@ -21,6 +21,7 @@
 		489FDE731EFFD16500686431 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE721EFFD16500686431 /* GCDBlackBox.swift */; };
 		489FDE761EFFFDFA00686431 /* OnTheMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE751EFFFDFA00686431 /* OnTheMap.swift */; };
 		489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */; };
+		489FDE7A1F016E3C00686431 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE791F016E3C00686431 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +44,8 @@
 /* Begin PBXFileReference section */
 		489FDE331EFD6F7700686431 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		489FDE361EFD6F7700686431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		489FDE381EFD6F7700686431 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		489FDE3A1EFD6F7700686431 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		489FDE381EFD6F7700686431 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		489FDE3A1EFD6F7700686431 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		489FDE3D1EFD6F7700686431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		489FDE3F1EFD6F7700686431 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		489FDE421EFD6F7700686431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 		489FDE721EFFD16500686431 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		489FDE751EFFFDFA00686431 /* OnTheMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMap.swift; sourceTree = "<group>"; };
 		489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapClientExtension.swift; sourceTree = "<group>"; };
+		489FDE791F016E3C00686431 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,9 +145,10 @@
 		489FDE661EFD78E800686431 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				489FDE381EFD6F7700686431 /* FirstViewController.swift */,
-				489FDE3A1EFD6F7700686431 /* SecondViewController.swift */,
+				489FDE381EFD6F7700686431 /* MapViewController.swift */,
+				489FDE3A1EFD6F7700686431 /* ListViewController.swift */,
 				489FDE671EFD7A1800686431 /* LoginViewController.swift */,
+				489FDE791F016E3C00686431 /* TabBarController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -326,11 +329,12 @@
 				489FDE761EFFFDFA00686431 /* OnTheMap.swift in Sources */,
 				489FDE731EFFD16500686431 /* GCDBlackBox.swift in Sources */,
 				489FDE6F1EFEB86600686431 /* OnTheMapClient.swift in Sources */,
+				489FDE7A1F016E3C00686431 /* TabBarController.swift in Sources */,
 				489FDE681EFD7A1800686431 /* LoginViewController.swift in Sources */,
-				489FDE3B1EFD6F7700686431 /* SecondViewController.swift in Sources */,
+				489FDE3B1EFD6F7700686431 /* ListViewController.swift in Sources */,
 				489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */,
 				489FDE371EFD6F7700686431 /* AppDelegate.swift in Sources */,
-				489FDE391EFD6F7700686431 /* FirstViewController.swift in Sources */,
+				489FDE391EFD6F7700686431 /* MapViewController.swift in Sources */,
 				489FDE711EFEB90800686431 /* OnTheMapConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

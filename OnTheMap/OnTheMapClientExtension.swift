@@ -17,10 +17,18 @@ extension OnTheMapClient {
                     print(onTheMap.getUserId())
                     self.onTheMap = onTheMap
                 }
-                completionHandlerForAuth(success, errorString)
-            }else {
-                completionHandlerForAuth(success, errorString)
             }
+            completionHandlerForAuth(success, errorString)
+        }
+    }
+    
+    func logoutWithViewController(_ hostViewController: UIViewController, completionHandlerForLogout: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        deleteSession() { (success, errorString) in
+            if success {
+                print(success)
+                self.onTheMap = nil
+            }
+            completionHandlerForLogout(success, errorString)
         }
     }
     
@@ -39,6 +47,28 @@ extension OnTheMapClient {
                 completionHandlerForGetSession(true, ontheMap, nil)
             }
         }
-
     }
+    
+    private func deleteSession(completionHandlerForDeleteSession: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        var headerParameters = [String: AnyObject]()
+        if let xsrfCookie = xsrfCookie {
+            headerParameters[xsrfCookie.value] = "X-XSRF-TOKEN" as AnyObject
+        }
+        let _ = OnTheMapClient.sharedInstance().taskForDELETEMethod(OnTheMapClient.Methods.Session, parameters: [String: AnyObject](), headerParameters: headerParameters) { (results, errors) in
+            if let errors = errors {
+                print(errors)
+                completionHandlerForDeleteSession(false, "Logout failed")
+            }else {
+                completionHandlerForDeleteSession(true, nil)
+            }
+            
+        }
+        
+    }
+    
 }

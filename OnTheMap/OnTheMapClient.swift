@@ -50,17 +50,71 @@ class OnTheMapClient: NSObject {
                 sendError("No data returned from request")
                 return
             }
-            // Remove the first 5 characters of response from Udacity
-            let range = Range(5..<data!.count)
             
-            let newData = data?.subdata(in: range)
+            let newData = self.getData(data)
             
-            self.convertDataWithCompletionHandler(newData!, completionHandlerForDataConversion: completionHandlerForPOST)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForDataConversion: completionHandlerForPOST)
         }
         
         task.resume()
         
         return task
+    }
+    
+    
+    func taskForDELETEMethod(_ method: String, parameters: [String: AnyObject], headerParameters: [String: AnyObject],completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        let request = NSMutableURLRequest(url: udacityUrlFromParameters(parameters, withPathExtension: method))
+        request.httpMethod = "DELETE"
+        
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        for (k, v) in headerParameters {
+            request.setValue(k as String, forHTTPHeaderField: v as! String)
+        }
+        
+        let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForDELETE(nil, NSError(domain: "taskForDELETEMethod", code: 1, userInfo: userInfo))
+            }
+            
+            guard(error == nil) else {
+                sendError("Error during request: \(error!)")
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 &&
+                statusCode <= 299 else {
+                    sendError("Request returned response other than 2xx")
+                    return
+            }
+            
+            guard data != nil else {
+                sendError("No data returned from request")
+                return
+            }
+            
+            let newData = self.getData(data)
+            
+            self.convertDataWithCompletionHandler(newData, completionHandlerForDataConversion: completionHandlerForDELETE)
+        }
+        task.resume()
+        return task
+        
+    }
+   
+    
+    private func getData(_ data: Data?) -> Data {
+        
+        // Remove the first 5 characters of response from Udacity
+        let range = Range(5..<data!.count)
+        
+        let newData = data?.subdata(in: range)
+
+        return newData!
     }
     
     private func udacityUrlFromParameters(_ parameters: [String: AnyObject], withPathExtension: String? = nil) -> URL {
