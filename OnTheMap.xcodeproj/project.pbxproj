@@ -22,6 +22,7 @@
 		489FDE761EFFFDFA00686431 /* OnTheMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE751EFFFDFA00686431 /* OnTheMap.swift */; };
 		489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */; };
 		489FDE7A1F016E3C00686431 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE791F016E3C00686431 /* TabBarController.swift */; };
+		489FDE7C1F02ADBC00686431 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE7B1F02ADBC00686431 /* StudentLocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		489FDE751EFFFDFA00686431 /* OnTheMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMap.swift; sourceTree = "<group>"; };
 		489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapClientExtension.swift; sourceTree = "<group>"; };
 		489FDE791F016E3C00686431 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		489FDE7B1F02ADBC00686431 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				489FDE751EFFFDFA00686431 /* OnTheMap.swift */,
+				489FDE7B1F02ADBC00686431 /* StudentLocation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				489FDE761EFFFDFA00686431 /* OnTheMap.swift in Sources */,
+				489FDE7C1F02ADBC00686431 /* StudentLocation.swift in Sources */,
 				489FDE731EFFD16500686431 /* GCDBlackBox.swift in Sources */,
 				489FDE6F1EFEB86600686431 /* OnTheMapClient.swift in Sources */,
 				489FDE7A1F016E3C00686431 /* TabBarController.swift in Sources */,

@@ -11,6 +11,7 @@ import Foundation
 struct OnTheMap {
     let account: [String: AnyObject]
     
+    
     init(_ dictionary: [String: AnyObject]) {
         account = dictionary[OnTheMapClient.JSONResponseKeys.account] as! [String : AnyObject]
     }

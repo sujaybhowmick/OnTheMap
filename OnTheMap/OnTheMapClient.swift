@@ -14,14 +14,61 @@ class OnTheMapClient: NSObject {
     
     var onTheMap: OnTheMap!
     
+    var studentLocations: [StudentLocation]!
+    
+    var count: Int!
+        
     override init() {
         super.init()
     }
     
-    func taskForPOSTMethod(_ method: String, parameters: [String: AnyObject], jsonBody: String, completionHandlerForPOST:
+    func taskForGetMethodParse(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject],
+                          completionHandlerForGET: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(OnTheMapClient.ParseContants.ApiKey, forHTTPHeaderField: OnTheMapClient.ParseContants.ApiKeyHeaderField)
+        request.addValue(OnTheMapClient.ParseContants.AppID, forHTTPHeaderField: OnTheMapClient.ParseContants.AppIDHeaderField)
+        
+        let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("Error during request: \(error!)")
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 &&
+                statusCode <= 299 else {
+                    sendError("Request returned response other than 2xx")
+                    return
+            }
+            
+            guard data != nil else {
+                sendError("No data returned from request")
+                return
+            }
+            
+            //let newData = self.getData(data)
+            print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
+            self.convertDataWithCompletionHandler(data!, completionHandlerForDataConversion: completionHandlerForGET)
+        }
+        
+        task.resume()
+        
+        return task
+
+    }
+    
+    func taskForPOSTMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject], jsonBody: String, completionHandlerForPOST:
         @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(url: udacityUrlFromParameters(parameters, withPathExtension: method))
+        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
         
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -62,9 +109,9 @@ class OnTheMapClient: NSObject {
     }
     
     
-    func taskForDELETEMethod(_ method: String, parameters: [String: AnyObject], headerParameters: [String: AnyObject],completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForDELETEMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject], headerParameters: [String: AnyObject], completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(url: udacityUrlFromParameters(parameters, withPathExtension: method))
+        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
         request.httpMethod = "DELETE"
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -117,12 +164,12 @@ class OnTheMapClient: NSObject {
         return newData!
     }
     
-    private func udacityUrlFromParameters(_ parameters: [String: AnyObject], withPathExtension: String? = nil) -> URL {
+    private func urlFromParameters(_ urlComponents: [String: AnyObject], _ parameters: [String: AnyObject], withPathExtension: String? = nil) -> URL {
         var components = URLComponents()
         
-        components.scheme = OnTheMapClient.Constants.Scheme
-        components.host = OnTheMapClient.Constants.Host
-        components.path = OnTheMapClient.Constants.ApiPath + (withPathExtension ?? "")
+        components.scheme = urlComponents["\(OnTheMapClient.Constants.SchemeKey)"] as? String
+        components.host = urlComponents["\(OnTheMapClient.Constants.HostKey)"] as? String
+        components.path = urlComponents["\(OnTheMapClient.Constants.ApiPathKey)"] as! String + (withPathExtension ?? "")
         components.queryItems = [URLQueryItem]()
         
         for(key, value)  in parameters {
