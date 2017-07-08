@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapStudentViewController: UIViewController, MKMapViewDelegate {
+class MapStudentViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     
     var placeMark: CLPlacemark!
     
@@ -25,6 +25,7 @@ class MapStudentViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.webLink.delegate = self
         self.setUpButton()
         self.placePin()
         
@@ -35,6 +36,11 @@ class MapStudentViewController: UIViewController, MKMapViewDelegate {
         submitButton.layer.borderWidth = 0
     }
     
+    @IBAction func cancel(_ sender: Any) {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapTabViewController") as! TabBarController
+        present(controller, animated: true, completion: nil)
+
+    }
     
     @IBAction func submit(_ sender: Any) {
         let user = OnTheMapClient.sharedInstance().user!
@@ -96,6 +102,11 @@ class MapStudentViewController: UIViewController, MKMapViewDelegate {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: OnTheMapClient.Alerts.DismissAlert, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 }

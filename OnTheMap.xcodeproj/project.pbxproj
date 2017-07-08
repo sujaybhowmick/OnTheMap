@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		48613B671F0C95FE004C717B /* MapStudentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48613B661F0C95FE004C717B /* MapStudentLocationViewController.swift */; };
 		48613B691F0FEAF1004C717B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48613B681F0FEAF1004C717B /* User.swift */; };
+		48650FB71F1109BE0054FC1D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48650FB61F1109BE0054FC1D /* Images.xcassets */; };
 		488160E81F0B5CCE005E32EA /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488160E71F0B5CCE005E32EA /* AddLocationViewController.swift */; };
 		489FDE371EFD6F7700686431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE361EFD6F7700686431 /* AppDelegate.swift */; };
 		489FDE391EFD6F7700686431 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE381EFD6F7700686431 /* MapViewController.swift */; };
@@ -26,7 +27,6 @@
 		489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */; };
 		489FDE7A1F016E3C00686431 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE791F016E3C00686431 /* TabBarController.swift */; };
 		489FDE7C1F02ADBC00686431 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE7B1F02ADBC00686431 /* StudentLocation.swift */; };
-		489FDE811F07AF8500686431 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE801F07AF8500686431 /* Resource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +49,7 @@
 /* Begin PBXFileReference section */
 		48613B661F0C95FE004C717B /* MapStudentLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapStudentLocationViewController.swift; sourceTree = "<group>"; };
 		48613B681F0FEAF1004C717B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		48650FB61F1109BE0054FC1D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		488160E71F0B5CCE005E32EA /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		489FDE331EFD6F7700686431 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		489FDE361EFD6F7700686431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +73,6 @@
 		489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapClientExtension.swift; sourceTree = "<group>"; };
 		489FDE791F016E3C00686431 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		489FDE7B1F02ADBC00686431 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
-		489FDE801F07AF8500686431 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +123,6 @@
 		489FDE351EFD6F7700686431 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
-				489FDE7F1F07AF5800686431 /* Networking */,
 				489FDE741EFFFDE300686431 /* Model */,
 				489FDE6D1EFEB82A00686431 /* Client */,
 				489FDE6C1EFEB7E100686431 /* SupportingFiles */,
@@ -169,6 +168,7 @@
 		489FDE6B1EFEB7A900686431 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				48650FB61F1109BE0054FC1D /* Images.xcassets */,
 				489FDE3C1EFD6F7700686431 /* Main.storyboard */,
 				489FDE411EFD6F7700686431 /* LaunchScreen.storyboard */,
 				489FDE3F1EFD6F7700686431 /* Assets.xcassets */,
@@ -202,14 +202,6 @@
 				48613B681F0FEAF1004C717B /* User.swift */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		489FDE7F1F07AF5800686431 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				489FDE801F07AF8500686431 /* Resource.swift */,
-			);
-			name = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				489FDE431EFD6F7700686431 /* LaunchScreen.storyboard in Resources */,
+				48650FB71F1109BE0054FC1D /* Images.xcassets in Resources */,
 				489FDE401EFD6F7700686431 /* Assets.xcassets in Resources */,
 				489FDE3E1EFD6F7700686431 /* Main.storyboard in Resources */,
 			);
@@ -361,7 +354,6 @@
 				489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */,
 				489FDE371EFD6F7700686431 /* AppDelegate.swift in Sources */,
 				48613B671F0C95FE004C717B /* MapStudentLocationViewController.swift in Sources */,
-				489FDE811F07AF8500686431 /* Resource.swift in Sources */,
 				489FDE391EFD6F7700686431 /* MapViewController.swift in Sources */,
 				489FDE711EFEB90800686431 /* OnTheMapConstants.swift in Sources */,
 			);
@@ -517,6 +509,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 4XL3CX888E;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -530,6 +523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 4XL3CX888E;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

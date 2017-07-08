@@ -26,18 +26,15 @@ class OnTheMapClient: NSObject {
     
     func taskForGetMethodParse(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject],
                           completionHandlerForGET: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+       
+        let request = getRequestForParse(urlComponents, queryParams, method)
         request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(OnTheMapClient.ParseContants.ApiKey, forHTTPHeaderField: OnTheMapClient.ParseContants.ApiKeyHeaderField)
-        request.addValue(OnTheMapClient.ParseContants.AppID, forHTTPHeaderField: OnTheMapClient.ParseContants.AppIDHeaderField)
         
         let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandlerForGET(nil, NSError(domain: "taskForGetMethodParse", code: 1, userInfo: userInfo))
             }
             
             guard (error == nil) else {
@@ -56,8 +53,6 @@ class OnTheMapClient: NSObject {
                 return
             }
             
-            //let newData = self.getData(data)
-            print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
             self.convertDataWithCompletionHandler(data!, completionHandlerForDataConversion: completionHandlerForGET)
         }
         
@@ -68,13 +63,8 @@ class OnTheMapClient: NSObject {
     
     func taskForPOSTMethodParse(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject], _ jsonBody: String, completionHandlerForPOST: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+        let request = getRequestForParse(urlComponents, queryParams, method)
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(OnTheMapClient.ParseContants.ApiKey, forHTTPHeaderField: OnTheMapClient.ParseContants.ApiKeyHeaderField)
-        request.addValue(OnTheMapClient.ParseContants.AppID, forHTTPHeaderField: OnTheMapClient.ParseContants.AppIDHeaderField)
-        
         
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         
@@ -101,8 +91,6 @@ class OnTheMapClient: NSObject {
                 return
             }
             
-            //let newData = self.getData(data)
-            //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
             self.convertDataWithCompletionHandler(data!, completionHandlerForDataConversion: completionHandlerForPOST)
         }
         
@@ -111,12 +99,22 @@ class OnTheMapClient: NSObject {
         return task
     }
     
-    func taskForGetMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject],
-                               completionHandlerForGET: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
-        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
-        request.httpMethod = "GET"
+    
+    private func getRequestForParse(_ urlComponents: [String: AnyObject], _ queryParams: [String: AnyObject], _ method: String) -> NSMutableURLRequest {
+        let request = NSMutableURLRequest(url: self.urlFromParameters(urlComponents, queryParams, withPathExtension: method))
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(OnTheMapClient.ParseContants.ApiKey, forHTTPHeaderField: OnTheMapClient.ParseContants.ApiKeyHeaderField)
+        request.addValue(OnTheMapClient.ParseContants.AppID, forHTTPHeaderField: OnTheMapClient.ParseContants.AppIDHeaderField)
+        return request
+    }
+
+    
+    func taskForGetMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject],
+                               completionHandlerForGET: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        let request = getRequestForUdacity(urlComponents, queryParams, method)
+        request.httpMethod = "GET"
+      
         
         let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
             func sendError(_ error: String) {
@@ -141,8 +139,7 @@ class OnTheMapClient: NSObject {
                 return
             }
             
-            let newData = self.getData(data)
-            //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
+            let newData = self.getUdacityData(data)
             self.convertDataWithCompletionHandler(newData, completionHandlerForDataConversion: completionHandlerForGET)
         }
         
@@ -156,12 +153,12 @@ class OnTheMapClient: NSObject {
     func taskForPOSTMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject], jsonBody: String, completionHandlerForPOST:
         @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+        let request = getRequestForUdacity(urlComponents, queryParams, method)
         
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        
         let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
             
             func sendError(_ error: String) {
@@ -186,7 +183,7 @@ class OnTheMapClient: NSObject {
                 return
             }
             
-            let newData = self.getData(data)
+            let newData = self.getUdacityData(data)
             
             self.convertDataWithCompletionHandler(newData, completionHandlerForDataConversion: completionHandlerForPOST)
         }
@@ -199,11 +196,9 @@ class OnTheMapClient: NSObject {
     
     func taskForDELETEMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject], headerParameters: [String: AnyObject], completionHandlerForDELETE: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+        let request = getRequestForUdacity(urlComponents, queryParams, method)
         request.httpMethod = "DELETE"
-        
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
         for (k, v) in headerParameters {
             request.setValue(k as String, forHTTPHeaderField: v as! String)
         }
@@ -232,17 +227,28 @@ class OnTheMapClient: NSObject {
                 return
             }
             
-            let newData = self.getData(data)
+            let newData = self.getUdacityData(data)
             
             self.convertDataWithCompletionHandler(newData, completionHandlerForDataConversion: completionHandlerForDELETE)
         }
+        
         task.resume()
+        
         return task
         
     }
+    
+    
+    private func getRequestForUdacity(_ urlComponents: [String: AnyObject], _ queryParams: [String: AnyObject], _ method: String) -> NSMutableURLRequest {
+        let request = NSMutableURLRequest(url: self.urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return request
+    }
+
    
     
-    private func getData(_ data: Data?) -> Data {
+    private func getUdacityData(_ data: Data?) -> Data {
         
         // Remove the first 5 characters of response from Udacity
         let range = Range(5..<data!.count)
