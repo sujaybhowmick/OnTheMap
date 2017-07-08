@@ -64,7 +64,7 @@ class LoginViewController: UIViewController {
     
     private func displayError(_ errorString: String){
         print(errorString)
-        self.errorLabel.text = "Login Failed."
+        showAlert("Login Message", message: errorString)
     }
     
     private func showHideActivityIndicator(_ show: Bool = false){
@@ -79,6 +79,12 @@ class LoginViewController: UIViewController {
         self.userName.isEnabled = disable
         self.password.isEnabled = disable
         self.loginButton.isEnabled = disable
+    }
+    
+    func showAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: OnTheMapClient.Alerts.DismissAlert, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
    
 }

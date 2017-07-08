@@ -17,6 +17,15 @@ extension OnTheMapClient {
                     print(onTheMap.getUserId())
                     self.onTheMap = onTheMap
                 }
+                self.getLoggedInUserDetails() { (success, results, errorString) in
+                    if success {
+                        if let results = results {
+                            let user = results["\(JSONResponseKeys.user)"] as! [String: AnyObject]
+                            self.user = User(user)
+                        }
+                       
+                    }
+                }
             }
             completionHandlerForAuth(success, errorString)
         }
@@ -45,6 +54,18 @@ extension OnTheMapClient {
         
     }
     
+    func postStudentLocation(_ studentLocation: StudentLocation, completionHanderForPOSTStudentLocation: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        self.postStudentLocation(studentLocation) { (success, results, errorString) in
+            if success {
+                print("Successfully posted student location")
+            }else {
+                print("post failed")
+            }
+            completionHanderForPOSTStudentLocation(success, errorString)
+            
+        }
+    }
+       
     private func getSession(_ userName: String, _ password: String, completionHandlerForGetSession: @escaping (_ success: Bool, _ ontheMap: OnTheMap?, _ errorString: String?) -> Void) {
         var urlComponents = [String: AnyObject]()
         urlComponents["\(OnTheMapClient.Constants.SchemeKey)"] = OnTheMapClient.AuthConstants.Scheme as AnyObject
@@ -109,6 +130,47 @@ extension OnTheMapClient {
             }
 
         }
+    }
+    
+    private func getLoggedInUserDetails(completionHandlerForGetLoggedInUserDetails: @escaping (_ success: Bool, _ results: AnyObject?, _ errorString: String?) -> Void) {
+        var urlComponents = [String: AnyObject]()
+        urlComponents[OnTheMapClient.Constants.SchemeKey] = OnTheMapClient.AuthConstants.Scheme as AnyObject
+        urlComponents[OnTheMapClient.Constants.HostKey] = OnTheMapClient.AuthConstants.Host as AnyObject
+        urlComponents[OnTheMapClient.Constants.ApiPathKey] = OnTheMapClient.AuthConstants.ApiPath as AnyObject
         
+        let uniqueKey = OnTheMapClient.sharedInstance().onTheMap.getUserId()
+        
+        let method = "\(OnTheMapClient.UserContants.Users)/\(uniqueKey)"
+        
+        let _ = OnTheMapClient.sharedInstance().taskForGetMethod(method, urlComponents: urlComponents, queryParams: [String: AnyObject]()) { (results, error) in
+            if let error = error {
+                print(error)
+                completionHandlerForGetLoggedInUserDetails(false, nil, "Failed to Get LoggedIn User Information")
+            }else {
+                completionHandlerForGetLoggedInUserDetails(true, results, nil)
+            }
+            
+        }
+    }
+    
+    private func postStudentLocation(_ studentLocation: StudentLocation, completionHandlerForPOSTStudentLocation: @escaping (_ success: Bool, _ results: AnyObject?, _ errorString: String?) -> Void ){
+        var urlComponents = [String: AnyObject]()
+        urlComponents[OnTheMapClient.Constants.SchemeKey] = OnTheMapClient.ParseContants.Scheme as AnyObject
+        urlComponents[OnTheMapClient.Constants.HostKey] = OnTheMapClient.ParseContants.Host as AnyObject
+        urlComponents[OnTheMapClient.Constants.ApiPathKey] = OnTheMapClient.ParseContants.ApiPath as AnyObject
+
+        let jsonRequestBody = "{\"\(OnTheMapClient.JSONBodyKeys.uniqueKey)\": \"\(studentLocation.uniqueKey)\", \"\(OnTheMapClient.JSONBodyKeys.firstName)\": \"\(studentLocation.firstName)\", \"\(OnTheMapClient.JSONBodyKeys.lastName)\": \"\(studentLocation.lastName)\", \"\(OnTheMapClient.JSONBodyKeys.mapString)\": \"\(studentLocation.mapString)\", \"\(OnTheMapClient.JSONBodyKeys.mediaURL)\": \"\(studentLocation.mediaURL)\", \"\(OnTheMapClient.JSONBodyKeys.latitude)\": \(studentLocation.latitude), \"\(OnTheMapClient.JSONBodyKeys.longitude)\": \(studentLocation.longitude)}"
+        
+        print(jsonRequestBody)
+        
+        let _ = OnTheMapClient.sharedInstance().taskForPOSTMethodParse(OnTheMapClient.ParseMethods.StudentLocation, urlComponents: urlComponents, queryParams: [String: AnyObject](), jsonRequestBody) { (results, error) in
+            if let error = error {
+                print(error)
+                completionHandlerForPOSTStudentLocation(false, nil, "Failed to Post Student Location")
+            }else {
+                completionHandlerForPOSTStudentLocation(true, results, nil)
+            }
+            
+        }
     }
 }

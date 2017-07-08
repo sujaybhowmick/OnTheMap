@@ -19,4 +19,5 @@ struct OnTheMap {
     func getUserId() -> String {
         return (account[OnTheMapClient.JSONResponseKeys.userId] as? String)!
     }
+    
 }

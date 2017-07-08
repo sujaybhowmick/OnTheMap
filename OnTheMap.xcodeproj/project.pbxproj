@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48613B671F0C95FE004C717B /* MapStudentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48613B661F0C95FE004C717B /* MapStudentLocationViewController.swift */; };
+		48613B691F0FEAF1004C717B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48613B681F0FEAF1004C717B /* User.swift */; };
+		488160E81F0B5CCE005E32EA /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488160E71F0B5CCE005E32EA /* AddLocationViewController.swift */; };
 		489FDE371EFD6F7700686431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE361EFD6F7700686431 /* AppDelegate.swift */; };
 		489FDE391EFD6F7700686431 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE381EFD6F7700686431 /* MapViewController.swift */; };
 		489FDE3B1EFD6F7700686431 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE3A1EFD6F7700686431 /* ListViewController.swift */; };
@@ -23,6 +26,7 @@
 		489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */; };
 		489FDE7A1F016E3C00686431 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE791F016E3C00686431 /* TabBarController.swift */; };
 		489FDE7C1F02ADBC00686431 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE7B1F02ADBC00686431 /* StudentLocation.swift */; };
+		489FDE811F07AF8500686431 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FDE801F07AF8500686431 /* Resource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		48613B661F0C95FE004C717B /* MapStudentLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapStudentLocationViewController.swift; sourceTree = "<group>"; };
+		48613B681F0FEAF1004C717B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		488160E71F0B5CCE005E32EA /* AddLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		489FDE331EFD6F7700686431 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		489FDE361EFD6F7700686431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		489FDE381EFD6F7700686431 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +72,7 @@
 		489FDE771F003D2A00686431 /* OnTheMapClientExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapClientExtension.swift; sourceTree = "<group>"; };
 		489FDE791F016E3C00686431 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		489FDE7B1F02ADBC00686431 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		489FDE801F07AF8500686431 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,7 @@
 		489FDE351EFD6F7700686431 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				489FDE7F1F07AF5800686431 /* Networking */,
 				489FDE741EFFFDE300686431 /* Model */,
 				489FDE6D1EFEB82A00686431 /* Client */,
 				489FDE6C1EFEB7E100686431 /* SupportingFiles */,
@@ -151,6 +160,8 @@
 				489FDE3A1EFD6F7700686431 /* ListViewController.swift */,
 				489FDE671EFD7A1800686431 /* LoginViewController.swift */,
 				489FDE791F016E3C00686431 /* TabBarController.swift */,
+				488160E71F0B5CCE005E32EA /* AddLocationViewController.swift */,
+				48613B661F0C95FE004C717B /* MapStudentLocationViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -188,8 +199,17 @@
 			children = (
 				489FDE751EFFFDFA00686431 /* OnTheMap.swift */,
 				489FDE7B1F02ADBC00686431 /* StudentLocation.swift */,
+				48613B681F0FEAF1004C717B /* User.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		489FDE7F1F07AF5800686431 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				489FDE801F07AF8500686431 /* Resource.swift */,
+			);
+			name = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,10 +354,14 @@
 				489FDE731EFFD16500686431 /* GCDBlackBox.swift in Sources */,
 				489FDE6F1EFEB86600686431 /* OnTheMapClient.swift in Sources */,
 				489FDE7A1F016E3C00686431 /* TabBarController.swift in Sources */,
+				488160E81F0B5CCE005E32EA /* AddLocationViewController.swift in Sources */,
 				489FDE681EFD7A1800686431 /* LoginViewController.swift in Sources */,
 				489FDE3B1EFD6F7700686431 /* ListViewController.swift in Sources */,
+				48613B691F0FEAF1004C717B /* User.swift in Sources */,
 				489FDE781F003D2A00686431 /* OnTheMapClientExtension.swift in Sources */,
 				489FDE371EFD6F7700686431 /* AppDelegate.swift in Sources */,
+				48613B671F0C95FE004C717B /* MapStudentLocationViewController.swift in Sources */,
+				489FDE811F07AF8500686431 /* Resource.swift in Sources */,
 				489FDE391EFD6F7700686431 /* MapViewController.swift in Sources */,
 				489FDE711EFEB90800686431 /* OnTheMapConstants.swift in Sources */,
 			);

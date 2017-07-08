@@ -16,6 +16,8 @@ class OnTheMapClient: NSObject {
     
     var studentLocations: [StudentLocation]!
     
+    var user: User!
+    
     var count: Int!
         
     override init() {
@@ -62,8 +64,94 @@ class OnTheMapClient: NSObject {
         task.resume()
         
         return task
-
     }
+    
+    func taskForPOSTMethodParse(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject], _ jsonBody: String, completionHandlerForPOST: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(OnTheMapClient.ParseContants.ApiKey, forHTTPHeaderField: OnTheMapClient.ParseContants.ApiKeyHeaderField)
+        request.addValue(OnTheMapClient.ParseContants.AppID, forHTTPHeaderField: OnTheMapClient.ParseContants.AppIDHeaderField)
+        
+        
+        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        
+        let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethodParse", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("Error during request: \(error!)")
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 &&
+                statusCode <= 299 else {
+                    sendError("Request returned response other than 2xx")
+                    return
+            }
+            
+            guard data != nil else {
+                sendError("No data returned from request")
+                return
+            }
+            
+            //let newData = self.getData(data)
+            //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
+            self.convertDataWithCompletionHandler(data!, completionHandlerForDataConversion: completionHandlerForPOST)
+        }
+        
+        task.resume()
+        
+        return task
+    }
+    
+    func taskForGetMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject],
+                               completionHandlerForGET: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        let request = NSMutableURLRequest(url: urlFromParameters(urlComponents, queryParams, withPathExtension: method))
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("Error during request: \(error!)")
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 &&
+                statusCode <= 299 else {
+                    sendError("Request returned response other than 2xx")
+                    return
+            }
+            
+            guard data != nil else {
+                sendError("No data returned from request")
+                return
+            }
+            
+            let newData = self.getData(data)
+            //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForDataConversion: completionHandlerForGET)
+        }
+        
+        task.resume()
+        
+        return task
+        
+    }
+
     
     func taskForPOSTMethod(_ method: String, urlComponents: [String: AnyObject], queryParams: [String: AnyObject], jsonBody: String, completionHandlerForPOST:
         @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
@@ -167,9 +255,9 @@ class OnTheMapClient: NSObject {
     private func urlFromParameters(_ urlComponents: [String: AnyObject], _ parameters: [String: AnyObject], withPathExtension: String? = nil) -> URL {
         var components = URLComponents()
         
-        components.scheme = urlComponents["\(OnTheMapClient.Constants.SchemeKey)"] as? String
-        components.host = urlComponents["\(OnTheMapClient.Constants.HostKey)"] as? String
-        components.path = urlComponents["\(OnTheMapClient.Constants.ApiPathKey)"] as! String + (withPathExtension ?? "")
+        components.scheme = urlComponents[OnTheMapClient.Constants.SchemeKey] as? String
+        components.host = urlComponents[OnTheMapClient.Constants.HostKey] as? String
+        components.path = urlComponents[OnTheMapClient.Constants.ApiPathKey] as! String + (withPathExtension ?? "")
         components.queryItems = [URLQueryItem]()
         
         for(key, value)  in parameters {

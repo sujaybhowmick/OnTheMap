@@ -9,7 +9,7 @@
 import Foundation
 
 struct StudentLocation {
-    let objectId: String
+    let objectId: String?
     
     let uniqueKey: String
     
@@ -25,9 +25,9 @@ struct StudentLocation {
     
     let longitude: Double
     
-    let createdAt: String
+    let createdAt: String?
     
-    let updatedAt: String
+    let updatedAt: String?
     
 }
 
@@ -57,6 +57,19 @@ extension StudentLocation {
         self.updatedAt = updatedAt
         self.objectId = objectId
         self.uniqueKey = uniqueKey
+    }
+    
+    init(uniqueKey: String, firstName: String, lastName: String, mapString: String, mediaURL: String, latitude: Double, longitude: Double) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.mapString = mapString
+        self.mediaURL = mediaURL
+        self.latitude = latitude
+        self.longitude = longitude
+        self.createdAt = nil
+        self.uniqueKey = uniqueKey
+        self.updatedAt = nil
+        self.objectId = nil
     }
     
     static func getStudentLocations(json: [String: AnyObject]) -> [StudentLocation] {

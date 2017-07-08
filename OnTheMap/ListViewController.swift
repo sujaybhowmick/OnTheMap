@@ -9,7 +9,16 @@
 import UIKit
 
 class ListViewController: UITableViewController {
+    
+    @IBAction func addStudentLocation(_ sender: Any) {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "AddStudentLocationController") as! AddLocationViewController
+        
+        present(controller, animated: true, completion: nil)
+    }
 
+    @IBAction func refresh(_ sender: Any) {
+        self.reloadData()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView!.reloadData()
@@ -25,6 +34,7 @@ class ListViewController: UITableViewController {
         let studentLocation = OnTheMapClient.sharedInstance().studentLocations[indexPath.row]
         
         cell.textLabel?.text = "\(studentLocation.firstName) \(studentLocation.lastName)"
+        cell.imageView?.image = #imageLiteral(resourceName: "icon_pin")
         
         return cell
         
@@ -63,6 +73,19 @@ class ListViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func reloadData() {
+        OnTheMapClient.sharedInstance().getStudentLocations(self) { (success, errorString) in
+            if success {
+                print("success")
+                performUIUpdatesOnMain {
+                    self.tableView!.reloadData()
+                }
+            }else {
+                print("failed")
+            }
+        }
     }
 
 
