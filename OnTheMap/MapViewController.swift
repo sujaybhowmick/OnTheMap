@@ -13,6 +13,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     @IBAction func refresh(_ sender: Any) {
         self.reloadData()
     }
@@ -91,9 +93,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func reloadData() {
+        self.showHideActivityIndicator(true)
         OnTheMapClient.sharedInstance().getStudentLocations(self) { (success, errorString) in
             performUIUpdatesOnMain {
                 if success {
+                    self.showHideActivityIndicator(false)
                     print("success")
                     
                     let studentLocations: [StudentLocation] = StudentLocationCollection.all
@@ -124,6 +128,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: OnTheMapClient.Alerts.DismissAlert, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showHideActivityIndicator(_ show: Bool = false){
+        if show {
+            self.activityIndicator.startAnimating()
+        }else {
+            self.activityIndicator.stopAnimating()
+        }
     }
 
     

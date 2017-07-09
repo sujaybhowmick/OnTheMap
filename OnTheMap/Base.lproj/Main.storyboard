@@ -43,13 +43,19 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="AZU-VP-RRY">
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                             </mapView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="QJx-iQ-EWs">
+                                <rect key="frame" x="189" y="350" width="37" height="37"/>
+                                <color key="color" red="0.16674041370000001" green="0.61025223930000005" blue="0.91529187820000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="AZU-VP-RRY" secondAttribute="trailing" id="3Vz-XC-I6p"/>
                             <constraint firstItem="AZU-VP-RRY" firstAttribute="leading" secondItem="eau-bX-CmS" secondAttribute="leading" id="9Rc-bg-Pxo"/>
                             <constraint firstAttribute="bottom" secondItem="AZU-VP-RRY" secondAttribute="bottom" id="DMt-FS-g1F"/>
+                            <constraint firstItem="QJx-iQ-EWs" firstAttribute="centerX" secondItem="eau-bX-CmS" secondAttribute="centerX" id="IFX-4D-ssc"/>
                             <constraint firstItem="AZU-VP-RRY" firstAttribute="top" secondItem="yZ9-p5-aNb" secondAttribute="bottom" id="M76-9j-SW1"/>
+                            <constraint firstItem="QJx-iQ-EWs" firstAttribute="centerY" secondItem="eau-bX-CmS" secondAttribute="centerY" id="eGm-Oc-P4Q"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="acW-dT-cKf"/>
@@ -74,6 +80,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="QJx-iQ-EWs" id="8B3-2m-niO"/>
                         <outlet property="mapView" destination="AZU-VP-RRY" id="o5H-KJ-ekA"/>
                     </connections>
                 </viewController>
@@ -451,6 +458,6 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ops-Vv-CZy"/>
+        <segue reference="le3-wT-qDN"/>
     </inferredMetricsTieBreakers>
 </document>
