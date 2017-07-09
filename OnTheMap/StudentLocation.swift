@@ -82,3 +82,28 @@ extension StudentLocation {
         return studentLocations
     }
 }
+
+struct StudentLocationCollection {
+    static var studentLocations = [StudentLocation]()
+    
+    static func addStudentLocations(json: [String: AnyObject]) -> Void {
+        studentLocations.removeAll()
+        for case let result in json[OnTheMapClient.JSONResponseKeys.results] as! [AnyObject]{
+            if let studentLocation = StudentLocation(result: result as! [String: AnyObject]) {
+                studentLocations.append(studentLocation)
+            }
+        }
+    }
+    
+    static var all: [StudentLocation] {
+        return studentLocations
+    }
+    
+    static func get(atIndex index: Int) -> StudentLocation {
+        return studentLocations[index]
+    }
+    
+    static var count: Int {
+        return studentLocations.count
+    }
+}

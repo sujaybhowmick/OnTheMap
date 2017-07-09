@@ -57,6 +57,8 @@ extension OnTheMapClient {
         static let StudentLocationOrder = "order"
         static let StudentLocationLimit = "limit"
         static let StudentLocationSkip = "skip"
+        static let DataLimit = 100
+        static let UpdatedAtDesc = "-updatedAt"
     }
     
     struct JSONBodyKeys {
@@ -70,6 +72,7 @@ extension OnTheMapClient {
         static let mediaURL = "mediaURL"
         static let latitude = "latitude"
         static let longitude = "longitude"
+        
         
     }
     

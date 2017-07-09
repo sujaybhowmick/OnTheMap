@@ -26,18 +26,25 @@ class ListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return OnTheMapClient.sharedInstance().count
+        return StudentLocationCollection.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OnTheMapCell")!
-        let studentLocation = OnTheMapClient.sharedInstance().studentLocations[indexPath.row]
+        let studentLocation = StudentLocationCollection.get(atIndex: indexPath.row)
         
         cell.textLabel?.text = "\(studentLocation.firstName) \(studentLocation.lastName)"
         cell.imageView?.image = #imageLiteral(resourceName: "icon_pin")
         
         return cell
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let studentLocation = StudentLocationCollection.get(atIndex: indexPath.row)
+        if let url = URL(string: studentLocation.mediaURL) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func doLogout(_ sender: Any) {
@@ -57,22 +64,11 @@ class ListViewController: UITableViewController {
     }
     
     private func completeLogout() {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        present(controller, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     private func displayError(_ errorString: String){
         print(errorString)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     private func reloadData() {
@@ -87,6 +83,7 @@ class ListViewController: UITableViewController {
             }
         }
     }
+    
 
 
 }

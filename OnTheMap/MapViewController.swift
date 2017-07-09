@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import SafariServices
 
 class MapViewController: UIViewController, MKMapViewDelegate {
 
@@ -40,8 +39,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func completeLogout() {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        present(controller, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     private func displayError(_ errorString: String){
@@ -85,8 +83,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if let subtitle = annotation.subtitle {
             if let url = subtitle {
                 if let actualURL = URL(string: url) {
-                    let safariViewController = SFSafariViewController(url: actualURL)
-                    present(safariViewController, animated: true, completion: nil)
+                    UIApplication.shared.open(actualURL, options: [:], completionHandler: nil)
                 }
             }
             
@@ -95,32 +92,40 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     private func reloadData() {
         OnTheMapClient.sharedInstance().getStudentLocations(self) { (success, errorString) in
-            if success {
-                print("success")
-                performUIUpdatesOnMain {
-                    if let studentLocations: [StudentLocation] = OnTheMapClient.sharedInstance().studentLocations {
-                        var annotations = [MKPointAnnotation]()
-                        for studentLocation in studentLocations {
-                            let lat = CLLocationDegrees(studentLocation.latitude)
-                            let long = CLLocationDegrees(studentLocation.longitude)
-                            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                            let annotation = MKPointAnnotation()
-                            annotation.coordinate = coordinate
-                            annotation.title = "\(studentLocation.firstName) \(studentLocation.lastName)"
-                            annotation.subtitle = "\(studentLocation.mediaURL)"
-                            annotations.append(annotation)
-                            
-                        }
-                        self.mapView.addAnnotations(annotations)
+            performUIUpdatesOnMain {
+                if success {
+                    print("success")
+                    
+                    let studentLocations: [StudentLocation] = StudentLocationCollection.all
+                    var annotations = [MKPointAnnotation]()
+                    for studentLocation in studentLocations {
+                        let lat = CLLocationDegrees(studentLocation.latitude)
+                        let long = CLLocationDegrees(studentLocation.longitude)
+                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                        let annotation = MKPointAnnotation()
+                        annotation.coordinate = coordinate
+                        annotation.title = "\(studentLocation.firstName) \(studentLocation.lastName)"
+                        annotation.subtitle = "\(studentLocation.mediaURL)"
+                        annotations.append(annotation)
+                        
                     }
+                    self.mapView.addAnnotations(annotations)
+                    
+                }else {
+                    self.showAlert("Error Message", message: "Failed to fetch student locations")
                 }
-                
-            }else {
-                print("failed")
             }
+            
         }
 
     }
+    
+    private func showAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: OnTheMapClient.Alerts.DismissAlert, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
     
 }
 

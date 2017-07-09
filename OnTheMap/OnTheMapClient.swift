@@ -14,11 +14,7 @@ class OnTheMapClient: NSObject {
     
     var onTheMap: OnTheMap!
     
-    var studentLocations: [StudentLocation]!
-    
     var user: User!
-    
-    var count: Int!
         
     override init() {
         super.init()
@@ -52,6 +48,7 @@ class OnTheMapClient: NSObject {
                 sendError("No data returned from request")
                 return
             }
+            
             
             self.convertDataWithCompletionHandler(data!, completionHandlerForDataConversion: completionHandlerForGET)
         }
@@ -161,25 +158,25 @@ class OnTheMapClient: NSObject {
         
         let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: String, _ statusCode: Int) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                completionHandlerForPOST(nil, NSError(domain: "taskForPOSTMethod", code: statusCode, userInfo: userInfo))
             }
             
             guard (error == nil) else {
-                sendError("Error during request: \(error!)")
+                sendError("Error during request: \(error!)", 1)
                 return
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 &&
                 statusCode <= 299 else {
-                    sendError("Request returned response other than 2xx")
+                    sendError("Request returned response other than 2xx", ((response as? HTTPURLResponse)?.statusCode)!)
                     return
             }
             
             guard data != nil else {
-                sendError("No data returned from request")
+                sendError("No data returned from request", 1)
                 return
             }
             

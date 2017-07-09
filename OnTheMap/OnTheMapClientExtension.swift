@@ -44,8 +44,7 @@ extension OnTheMapClient {
     func getStudentLocations(_ hostViewController: UIViewController, completionHandlerForGetStudentLocations: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         getStudentLocations() { (success, results, errorString) in
             if success {
-                self.studentLocations = StudentLocation.getStudentLocations(json: results as! [String : AnyObject])
-                self.count = self.studentLocations.count
+                StudentLocationCollection.addStudentLocations(json: results as! [String : AnyObject])
             }else {
                 print("Failed to fetch StudentLocations")
             }
@@ -74,10 +73,14 @@ extension OnTheMapClient {
         
         let jsonRequestBody = "{\"\(OnTheMapClient.JSONBodyKeys.dictionaryKey)\": {\"\(OnTheMapClient.JSONBodyKeys.userNameKey)\": \"\(userName)\", \"\(OnTheMapClient.JSONBodyKeys.passwordKey)\": \"\(password)\"}}"
         
-        let _ = OnTheMapClient.sharedInstance().taskForPOSTMethod(OnTheMapClient.AuthMethods.Session, urlComponents: urlComponents, queryParams: [String: AnyObject](), jsonBody: jsonRequestBody) { (results, errors) in
-            if let errors = errors {
-                print(errors)
-                completionHandlerForGetSession(false, nil, "Login failed for User: \(userName).")
+        let _ = OnTheMapClient.sharedInstance().taskForPOSTMethod(OnTheMapClient.AuthMethods.Session, urlComponents: urlComponents, queryParams: [String: AnyObject](), jsonBody: jsonRequestBody) { (results, error) in
+            if let error = error {
+                print(error)
+                if error.code == 403 {
+                    completionHandlerForGetSession(false, nil, "Login failed for User: \(userName). Please check credentials.")
+                }else {
+                    completionHandlerForGetSession(false, nil, "Unable to login: \(userName).")
+                }
             }else {
                 let ontheMap = OnTheMap(results as! [String : AnyObject])
                 completionHandlerForGetSession(true, ontheMap, nil)
@@ -101,9 +104,9 @@ extension OnTheMapClient {
         urlComponents["\(OnTheMapClient.Constants.HostKey)"] = OnTheMapClient.AuthConstants.Host as AnyObject
         urlComponents["\(OnTheMapClient.Constants.ApiPathKey)"] = OnTheMapClient.AuthConstants.ApiPath as AnyObject
 
-        let _ = OnTheMapClient.sharedInstance().taskForDELETEMethod(OnTheMapClient.AuthMethods.Session, urlComponents: urlComponents, queryParams: [String: AnyObject](), headerParameters: headerParameters) { (results, errors) in
-            if let errors = errors {
-                print(errors)
+        let _ = OnTheMapClient.sharedInstance().taskForDELETEMethod(OnTheMapClient.AuthMethods.Session, urlComponents: urlComponents, queryParams: [String: AnyObject](), headerParameters: headerParameters) { (results, error) in
+            if let error = error {
+                print(error)
                 completionHandlerForDeleteSession(false, "Logout failed")
             }else {
                 completionHandlerForDeleteSession(true, nil)
@@ -119,9 +122,12 @@ extension OnTheMapClient {
         urlComponents["\(OnTheMapClient.Constants.SchemeKey)"] = OnTheMapClient.ParseContants.Scheme as AnyObject
         urlComponents["\(OnTheMapClient.Constants.HostKey)"] = OnTheMapClient.ParseContants.Host as AnyObject
         urlComponents["\(OnTheMapClient.Constants.ApiPathKey)"] = OnTheMapClient.ParseContants.ApiPath as AnyObject
+        var queryParams = [String: AnyObject]()
+        queryParams[OnTheMapClient.ParseMethodParams.StudentLocationLimit] = OnTheMapClient.ParseMethodParams.DataLimit as AnyObject
+        queryParams[OnTheMapClient.ParseMethodParams.StudentLocationOrder] = OnTheMapClient.ParseMethodParams.UpdatedAtDesc as AnyObject
         
         
-        let _ = OnTheMapClient.sharedInstance().taskForGetMethodParse(OnTheMapClient.ParseMethods.StudentLocation, urlComponents: urlComponents, queryParams: [String: AnyObject]()) { (results, error) in
+        let _ = OnTheMapClient.sharedInstance().taskForGetMethodParse(OnTheMapClient.ParseMethods.StudentLocation, urlComponents: urlComponents, queryParams: queryParams) { (results, error) in
             if let error = error {
                 print(error)
                 completionHandlerForGetStudentLocations(false, nil, "Failed to Get Student Locations")

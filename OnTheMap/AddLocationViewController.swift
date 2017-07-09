@@ -50,8 +50,7 @@ class AddLocationViewController: UIViewController, UITextViewDelegate {
     }
    
     @IBAction func cancel(_ sender: Any) {
-        let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapTabViewController") as! TabBarController
-        present(controller, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
 
     }
     
