@@ -93,6 +93,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     private func reloadData() {
+        self.mapView.removeAnnotations(self.mapView.annotations)
         self.showHideActivityIndicator(true)
         OnTheMapClient.sharedInstance().getStudentLocations(self) { (success, errorString) in
             performUIUpdatesOnMain {
